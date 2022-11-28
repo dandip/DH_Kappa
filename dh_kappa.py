@@ -59,7 +59,7 @@ def dh_kappa(A, B):
 
     C = col_sum(A) * (1 / (N * n))
     L = col_sum(B) * (1 / n)
-    C_E = row_sum(np.multiply(np.multiply(C, C), L)).item()
+    C_E = row_sum(np.multiply(np.multiply(C, C), L).reshape(1, -1))
 
     stacked_C = np.vstack(list(C for i in range(m)))
     T = np.multiply(stacked_C, np.ones((m,m)) - np.eye(m))
@@ -70,4 +70,4 @@ def dh_kappa(A, B):
     S = (col_sum(row_sum(np.multiply(f(A), np.ones((n,m)) - B)) * (1 / ncr(N, 2))) * (1 / n)).item()
 
     K_dh = ((R - S) - (C_E - C_F)) / (1 - (C_E - C_F) + eps)
-    return K_dh
+    return K_dh.item()
